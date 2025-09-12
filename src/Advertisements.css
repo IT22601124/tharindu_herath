@@ -1,0 +1,50 @@
+.advertisements-section {
+    padding: 50px 20px;
+    margin: 0 auto;
+    text-align: center;
+     color: rgb(34, 34, 34); /* dark text for white bg */
+    background: #fff; /* white background */
+  }
+  
+  .advertisements-section h2 {
+    font-size: 36px;
+    margin-bottom: 30px;
+  }
+  
+  .ads-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+  }
+  
+  .ad-card {
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .ad-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+  }
+  
+  .ad-card h3 {
+    font-size: 24px;
+    margin-bottom: 10px;
+    color: #f39c12;
+  }
+  
+  .ad-card p {
+    font-size: 16px;
+    margin-bottom: 10px;
+  }
+  
+  .ad-image {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin-bottom: 15px;
+  }
+  
