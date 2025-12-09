@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useRef } from "react";
+import { motion, useInView } from "framer-motion";
 import {
   FaReact,
   FaJava,
@@ -73,41 +74,109 @@ const skills = [
   },
 ];
 
-const Skills = () => (
-  <section className="bg-black-800 py-20 min-h-screen">
-    <div className="max-w-5xl mx-auto px-6">
-      <h2 className="text-4xl font-bold text-white mb-16 text-center">
-        My Skills
-      </h2>
+const Skills = () => {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: "-100px" });
 
-      <div className="space-y-10">
-        {skills.map((group, idx) => (
-          <div
-            key={idx}
-            className="bg-white shadow-md rounded-xl p-6 border border-gray-200"
-          >
-            <h3 className="text-xl font-semibold text-gray-800 mb-4 border-b pb-2">
-              {group.category}
-            </h3>
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.15,
+      },
+    },
+  };
 
-            <div className="flex flex-wrap gap-6">
-              {group.items.map((skill, i) => (
-                <div
-                  key={i}
-                  className="flex items-center gap-3 px-4 py-2 bg-gray-50 rounded-lg shadow-sm hover:shadow-md transition"
+  const categoryVariants = {
+    hidden: { opacity: 0, y: 30 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.6, ease: "easeOut" },
+    },
+  };
+
+  const skillVariants = {
+    hidden: { opacity: 0, scale: 0.8 },
+    visible: {
+      opacity: 1,
+      scale: 1,
+      transition: { duration: 0.3 },
+    },
+  };
+
+  return (
+    <section className="bg-gradient-to-b from-gray-900 to-gray-800 py-12 px-6 md:px-12 min-h-screen">
+      <div className="max-w-7xl mx-auto">
+        <motion.h2
+          ref={ref}
+          initial={{ opacity: 0, y: -20 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6 }}
+          className="text-4xl font-bold text-white mb-16 text-center"
+        >
+          My Skills
+          <motion.span
+            initial={{ width: 0 }}
+            animate={isInView ? { width: 100 } : { width: 0 }}
+            transition={{ duration: 0.8, delay: 0.3 }}
+            className="block h-1 bg-emerald-500 mx-auto mt-3"
+          ></motion.span>
+        </motion.h2>
+
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          animate={isInView ? "visible" : "hidden"}
+          className="space-y-10"
+        >
+          {skills.map((group, idx) => (
+            <motion.div
+              key={idx}
+              variants={categoryVariants}
+              whileHover={{ scale: 1.02 }}
+              className="bg-white shadow-xl rounded-xl p-6 border border-gray-200 hover:border-emerald-400 transition-all duration-300"
+            >
+              <h3 className="text-xl font-semibold text-gray-800 mb-4 border-b pb-2 flex items-center gap-2">
+                <motion.span
+                  animate={{ rotate: [0, 10, -10, 0] }}
+                  transition={{ duration: 2, repeat: Infinity, repeatDelay: 3 }}
+                  className="text-emerald-600"
                 >
-                  <span className="text-2xl text-emerald-600">{skill.icon}</span>
-                  <span className="text-sm font-medium text-gray-700">
-                    {skill.name}
-                  </span>
-                </div>
-              ))}
-            </div>
-          </div>
-        ))}
+                  ⚡
+                </motion.span>
+                {group.category}
+              </h3>
+
+              <div className="flex flex-wrap gap-4">
+                {group.items.map((skill, i) => (
+                  <motion.div
+                    key={i}
+                    variants={skillVariants}
+                    whileHover={{ scale: 1.1, y: -5 }}
+                    whileTap={{ scale: 0.95 }}
+                    className="flex items-center gap-3 px-4 py-2 bg-gradient-to-r from-gray-50 to-gray-100 rounded-lg shadow-sm hover:shadow-lg hover:from-emerald-50 hover:to-emerald-100 transition-all duration-300 cursor-pointer"
+                  >
+                    <motion.span
+                      animate={{ rotate: [0, 5, -5, 0] }}
+                      transition={{ duration: 2, repeat: Infinity, repeatDelay: i * 0.5 }}
+                      className="text-2xl text-emerald-600"
+                    >
+                      {skill.icon}
+                    </motion.span>
+                    <span className="text-sm font-medium text-gray-700">
+                      {skill.name}
+                    </span>
+                  </motion.div>
+                ))}
+              </div>
+            </motion.div>
+          ))}
+        </motion.div>
       </div>
-    </div>
-  </section>
-);
+    </section>
+  );
+};
 
 export default Skills;

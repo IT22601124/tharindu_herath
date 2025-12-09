@@ -1,4 +1,5 @@
-import React, { useMemo, useState } from "react";
+import React, { useMemo, useState, useRef } from "react";
+import { motion, useInView } from "framer-motion";
 
 // --- your data (kept as-is; icons removed for a cleaner look) ---
 const projects = [
@@ -63,7 +64,6 @@ const projects = [
     technologies: ["Kotlin"],
     link: "https://github.com/IT22601124/Jungle_Rush",
   },
-  // --- Added projects below ---
   {
     title: "Luxiris Gems - Website",
     year: 2025,
@@ -113,6 +113,8 @@ const Tag = ({ children }) => (
 const Projects = () => {
   const [query, setQuery] = useState("");
   const [year, setYear] = useState("All");
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   // build year options
   const years = useMemo(() => {
@@ -132,20 +134,63 @@ const Projects = () => {
     });
   }, [query, year]);
 
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+      },
+    },
+  };
+
+  const cardVariants = {
+    hidden: { opacity: 0, y: 30 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.5, ease: "easeOut" },
+    },
+  };
+
   return (
-    <section className="bg-gray-100 py-20">
-      <div className="mx-auto max-w-6xl px-6">
-        <div className="mb-8 flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
-          <h2 className="text-4xl font-bold text-gray-900">Projects</h2>
+    <section className="bg-gradient-to-b from-gray-100 to-gray-50 py-12 px-6 md:px-12">
+      <div className="max-w-7xl mx-auto">
+        <motion.div
+          ref={ref}
+          initial={{ opacity: 0, y: -20 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6 }}
+          className="mb-8 flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center"
+        >
+          <motion.h2
+            initial={{ opacity: 0, x: -20 }}
+            animate={isInView ? { opacity: 1, x: 0 } : {}}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="text-4xl font-bold text-gray-900"
+          >
+            Projects
+            <motion.span
+              initial={{ width: 0 }}
+              animate={isInView ? { width: 80 } : { width: 0 }}
+              transition={{ duration: 0.8, delay: 0.4 }}
+              className="block h-1 bg-gray-900 mt-2"
+            ></motion.span>
+          </motion.h2>
 
           {/* controls */}
-          <div className="flex w-full flex-col gap-3 sm:w-auto sm:flex-row">
+          <motion.div
+            initial={{ opacity: 0, x: 20 }}
+            animate={isInView ? { opacity: 1, x: 0 } : {}}
+            transition={{ duration: 0.6, delay: 0.3 }}
+            className="flex w-full flex-col gap-3 sm:w-auto sm:flex-row"
+          >
             <div className="relative">
               <input
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 placeholder="Search projects…"
-                className="w-full rounded-lg border border-gray-200 bg-white py-2.5 pl-10 pr-3 text-sm text-gray-900 placeholder-gray-400 outline-none focus:border-emerald-500 sm:w-64"
+                className="w-full rounded-lg border border-gray-300 bg-white py-2.5 pl-10 pr-3 text-sm text-gray-900 placeholder-gray-400 outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200 transition-all sm:w-64"
               />
               <span className="pointer-events-none absolute left-3 top-2.5 select-none text-gray-400">
                 🔎
@@ -155,7 +200,7 @@ const Projects = () => {
             <select
               value={year}
               onChange={(e) => setYear(e.target.value)}
-              className="w-full rounded-lg border border-gray-200 bg-white py-2.5 px-3 text-sm text-gray-900 outline-none focus:border-emerald-500 sm:w-40"
+              className="w-full rounded-lg border border-gray-300 bg-white py-2.5 px-3 text-sm text-gray-900 outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200 transition-all sm:w-40"
             >
               {years.map((y) => (
                 <option key={y} value={y}>
@@ -163,26 +208,42 @@ const Projects = () => {
                 </option>
               ))}
             </select>
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
 
         {/* grid of minimal cards */}
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          animate={isInView ? "visible" : "hidden"}
+          className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3"
+        >
           {filtered.map((p, i) => (
-            <article
+            <motion.article
               key={p.title + i}
-              className="group relative overflow-hidden rounded-xl border border-gray-200 bg-white transition-shadow hover:shadow-md"
+              variants={cardVariants}
+              whileHover={{ y: -8, transition: { duration: 0.3 } }}
+              className="group relative overflow-hidden rounded-xl border border-gray-200 bg-white transition-all hover:shadow-2xl hover:border-emerald-300"
             >
               {/* left accent */}
-              <div className="absolute left-0 top-0 h-full w-1 bg-emerald-500" />
+              <motion.div
+                initial={{ height: 0 }}
+                animate={{ height: "100%" }}
+                transition={{ duration: 0.5, delay: i * 0.1 }}
+                className="absolute left-0 top-0 w-1 bg-emerald-500"
+              />
 
               <div className="flex h-full flex-col p-5">
                 <div className="mb-3 flex items-start justify-between">
                   <div className="flex items-center gap-2">
-                    <span className="text-xl" aria-hidden>
+                    <motion.span
+                      whileHover={{ scale: 1.2, rotate: 10 }}
+                      className="text-xl"
+                      aria-hidden
+                    >
                       {badgeFor(p.title)}
-                    </span>
-                    <h3 className="text-base font-semibold text-gray-900">
+                    </motion.span>
+                    <h3 className="text-base font-semibold text-gray-900 group-hover:text-emerald-600 transition-colors">
                       {p.title}
                     </h3>
                   </div>
@@ -203,14 +264,15 @@ const Projects = () => {
 
                 <div className="mt-auto">
                   {p.link ? (
-                    <a
+                    <motion.a
                       href={p.link}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1 text-sm font-semibold text-emerald-700 hover:underline"
+                      whileHover={{ x: 5 }}
+                      className="inline-flex items-center gap-1 text-sm font-semibold text-emerald-700 hover:text-emerald-800 transition-colors"
                     >
                       View on GitHub / Website <span aria-hidden>↗</span>
-                    </a>
+                    </motion.a>
                   ) : (
                     <span className="inline-flex items-center gap-1 text-sm font-medium text-gray-400">
                       No public repo
@@ -218,15 +280,20 @@ const Projects = () => {
                   )}
                 </div>
               </div>
-            </article>
+            </motion.article>
           ))}
-        </div>
+        </motion.div>
 
         {/* empty state */}
         {filtered.length === 0 && (
-          <div className="mt-10 rounded-xl border border-dashed border-gray-300 bg-white p-10 text-center text-gray-500">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.3 }}
+            className="mt-10 rounded-xl border border-dashed border-gray-300 bg-white p-10 text-center text-gray-500"
+          >
             No projects match your search.
-          </div>
+          </motion.div>
         )}
       </div>
     </section>
