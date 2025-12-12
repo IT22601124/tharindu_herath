@@ -7,7 +7,7 @@ import ClientWebsites from './clientWebsites';
 import { motion, useInView } from 'framer-motion';
 import Advertisements from './Advertisements';
 import Contact from './contact';
-import ChatBot from './ChatBot';
+// import ChatBot from './ChatBot';
 
 // Typing animation hook
 function useTypingEffect(text, speed = 100, pause = 1200) {
@@ -388,8 +388,8 @@ const DominicPortfolio = () => {
         <Contact />
       </section>
    
-      {/* ChatBot */}
-      <ChatBot />
+      {/* ChatBot - Temporarily disabled for deployment */}
+      {/* <ChatBot /> */}
     </div>
   );
 };
