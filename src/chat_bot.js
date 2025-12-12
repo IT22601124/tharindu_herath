@@ -2,7 +2,7 @@ import { OpenAI } from "openai";
 
 const client = new OpenAI({
   baseURL: "https://router.huggingface.co/v1",
-  apiKey: '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',
+  apiKey: process.env.REACT_APP_HF_TOKEN,
   dangerouslyAllowBrowser: true
 });
 
