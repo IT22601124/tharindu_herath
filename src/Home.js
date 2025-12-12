@@ -7,6 +7,7 @@ import ClientWebsites from './clientWebsites';
 import { motion, useInView } from 'framer-motion';
 import Advertisements from './Advertisements';
 import Contact from './contact';
+import ChatBot from './ChatBot';
 
 // Typing animation hook
 function useTypingEffect(text, speed = 100, pause = 1200) {
@@ -204,7 +205,7 @@ const DominicPortfolio = () => {
               transition={{ delay: 1.3, duration: 0.7 }}
               className="text-gray-400 text-lg mb-8 max-w-xl"
             >
-              Passionate about building innovative mobile and web applications using React Native, MERN stack, and modern technologies.
+              Passionate about building innovative mobile and web applications using Flutter,React Native, MERN stack, and modern technologies.
             </motion.p>
 
             <motion.div
@@ -244,7 +245,7 @@ const DominicPortfolio = () => {
               </div>
               <div className="flex items-center gap-2 text-white">
                 <span className="text-2xl">🎓</span>
-                <span className="text-sm">SLIIT Graduate 2025</span>
+                <span className="text-sm">SLIIT  </span>
               </div>
             </motion.div>
           </motion.div>
@@ -387,6 +388,8 @@ const DominicPortfolio = () => {
         <Contact />
       </section>
    
+      {/* ChatBot */}
+      <ChatBot />
     </div>
   );
 };
