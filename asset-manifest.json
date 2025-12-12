@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/tharindu_herath/static/css/main.dec96045.css",
-    "main.js": "/tharindu_herath/static/js/main.6022ca6e.js",
-    "static/js/453.8bc6959a.chunk.js": "/tharindu_herath/static/js/453.8bc6959a.chunk.js",
-    "index.html": "/tharindu_herath/index.html",
-    "main.dec96045.css.map": "/tharindu_herath/static/css/main.dec96045.css.map",
-    "main.6022ca6e.js.map": "/tharindu_herath/static/js/main.6022ca6e.js.map",
-    "453.8bc6959a.chunk.js.map": "/tharindu_herath/static/js/453.8bc6959a.chunk.js.map"
+    "main.css": "/static/css/main.dec96045.css",
+    "main.js": "/static/js/main.a89da17f.js",
+    "static/js/453.8bc6959a.chunk.js": "/static/js/453.8bc6959a.chunk.js",
+    "index.html": "/index.html",
+    "main.dec96045.css.map": "/static/css/main.dec96045.css.map",
+    "main.a89da17f.js.map": "/static/js/main.a89da17f.js.map",
+    "453.8bc6959a.chunk.js.map": "/static/js/453.8bc6959a.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.dec96045.css",
-    "static/js/main.6022ca6e.js"
+    "static/js/main.a89da17f.js"
   ]
 }
