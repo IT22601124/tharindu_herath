@@ -34,8 +34,10 @@ const ChatBot = () => {
     setIsLoading(true);
 
     try {
-      // Get bot response
-      const botResponse = await chatWithBot(userMessage);
+      // Build history including the latest user message
+      const localHistory = [...messages, { role: 'user', content: userMessage }];
+      // Get bot response via hosted backend
+      const botResponse = await chatWithBot(userMessage, localHistory);
       setMessages((prev) => [...prev, { role: 'assistant', content: botResponse }]);
     } catch (error) {
       setMessages((prev) => [
